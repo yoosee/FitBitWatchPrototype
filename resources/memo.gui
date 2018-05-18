@@ -1,0 +1,7 @@
+  <g id="hours" pointer-events="visible" transform="translate(50%,50%)">
+    <rect x="-11" y="-85" width="6" height="50" class="hourhand" />
+    <rect x="3"   y="-85" width="6" height="50" class="hourhand" />
+    <arc x="-11" y="-90" width="20" height="20" arc-width="7" start-angle="270" sweep-angle="180" class="hourhand" />
+    <arc x="-11" y="-50" width="20" height="20" arc-width="7" start-angle="90" sweep-angle="180" class="hourhand" />
+    <rect x="-2"   y="-30" width="4" height="30" class="hourhand" />    
+  </g>

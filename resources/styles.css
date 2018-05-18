@@ -1,0 +1,47 @@
+.background {
+  viewport-fill: black;
+}
+
+.fl {
+  fill: fb-peach;
+}
+
+.fs {
+  fill: gray;
+}
+
+.healthText {
+  fill: fb-lavender;
+}
+
+.weatherText {
+  fill: fb-lavender;
+}
+
+.dateText {
+  fill: fb-white;
+}
+
+.hourhand {
+  fill: fb-red;
+}
+
+.minutehand {
+  fill: #cccccc;
+  opacity: 1;
+}
+
+.secondhand {
+  fill: fb-blue;
+}
+
+
+#myLabel {
+  font-size: 80;
+  font-family: System-Bold;
+  text-length: 32;
+  text-anchor: middle;
+  x: 50%;
+  y: 50%+40;
+  fill: white;
+}
