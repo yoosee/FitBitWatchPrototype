@@ -6,9 +6,9 @@ import Weather from '../common/weather/companion';
 
 let weather = new Weather;
 
-let SETTINGS_KEY_TEMP_UNIT = "temperatureUnit";
-let SETTINGS_KEY_WEATHER_ENABLED = "weatherEnabled";
 let SETTINGS_KEY_COLOR_THEME = "colorTheme";
+let SETTINGS_KEY_ALWAYS_ON   = "alwaysOn";
+let SETTINGS_KEY_HEALTH_STATUS = "healthStatus";
 
 // Settings have been changed
 settingsStorage.onchange = function(evt) {
@@ -18,7 +18,8 @@ settingsStorage.onchange = function(evt) {
 // Settings were changed while the companion was not running
 if (me.launchReasons.settingsChanged) {
   // Send the value of the setting
-  sendValue(SETTINGS_KEY_TEMP_UNIT, settingsStorage.getItem(SETTINGS_KEY_TEMP_UNIT));
+  sendValue(SETTINGS_KEY_ALWAYS_ON, settingsStorage.getItem(SETTINGS_KEY_ALWAYS_ON));
+  sendValue(SETTINGS_HEALTH_STATUS, settingsStorage.getItem(SETTINGS_KEY_HEALTH_STATUS));
 }
 
 function sendValue(key, val) {

@@ -3,19 +3,20 @@ function mySettings(props) {
     <Page>
       <Section
         title={<Text bold align="center">Settings</Text>}>
-        <Toggle settingsKey="weatherEnabled" label="Weather Info" />
-        <Toggle settingsKey="temperatureUnit" label="Temperature Unit [C/F]" />
-        <ColorSelect
-          settingsKey="colorTheme"
-          colors={[
-            {color: 'tomato'},
-            {color: 'sandybrown'},
-            {color: 'gold'},
-            {color: 'aquamarine'},
-            {color: 'deepskyblue'},
-            {color: 'plum'}
-          ]}
-        />
+
+        <Toggle settingsKey="alwaysOn" label="Display Always On" />
+        
+        <Select
+          label={`Health Status`}  
+          settingsKey="healthStatus"
+          options={[
+            {name:"Steps"},
+            {name:"Calories"},
+            {name:"Minutes"},
+            {name:"Distance"},
+            {name:"Elevation"},
+            {name:"HeartRate"},
+          ]} />
       </Section>
     </Page>
   );

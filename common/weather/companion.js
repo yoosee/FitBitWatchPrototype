@@ -16,7 +16,7 @@ export default class Weather {
 }
 
 const getWeather = () => {
-  console.log('Updating Weather');
+  console.log('Updating Weather from companion and calling geolocation.');
   geolocation.getCurrentPosition(locationSuccess, locationError);
 };
 
@@ -28,7 +28,7 @@ const locationSuccess = (position) => {
 };
 
 const locationError = (error) => {
-  console.log(`locationError: ${error.code} => ${error.message}`)
+  console.log("locationError: " + error.code + " => " + error.message);
 }
 
 const fetchWeatherOpenweather = (lat, lon) => {
@@ -53,13 +53,27 @@ const fetchWeatherOpenweather = (lat, lon) => {
   });
 };  
 
-const fetchWeatherGov = (lat, lon) => {
-  
-};
-
 const fetchWeatherUnderground = (lat, lon) => {
+  const APIKEY = '';
   
-};
+  console.log('Calling OpenWeather.org API');
+  const url = 'http://api.wunderground.com/api/' + APIKEY + '/conditions/astronomy/q/' + lat + ',' + lon + '.json';
+  fetch(url)
+  .then(function(response){
+    response.json()
+    .then(function(data) {
+      const weather= {
+        temperature: data["current_observation"]["temp_c"],
+        conditions: data["current_observation"]["weather"]
+      }
+      console.log("Weather: " + weather.conditions);
+      returnWeatherData(weather);
+    });
+  })
+  .catch(function(err) {
+    console.log("Error while fetching weather: " + err);
+  });
+};  
 
 const returnWeatherData = (data) => {
   if(messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {

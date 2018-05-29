@@ -9,21 +9,18 @@ export default class Weather {
     
     this.onsuccess = undefined;
     this.onerror   = undefined;
-  //}
-  
-    /*
-    messaging.peerSocket.onmessage = (evt) => {
-      
-    };
-    */
+    
     if(this.onsuccess) this.onsuccess(evt.data); 
   }
-    
+  
   fetch() {
     if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+      console.log("sending message: weather");
       messaging.peerSocket.send({
         command: 'weather'
       });
+    } else {
+      console.log("messaging.peerSocket.readyState couldn't be OPEN.");
     }
   }
   
@@ -49,12 +46,4 @@ messaging.peerSocket.onerror = (err) => {
 };
 */
 
-/*
-messaging.peerSocket.onmessage = (evt) => {
-  if(evt.data) {
-    process(evt.data); 
-  }
-};
-*/
-
-// setInterval(fetchWeather, 30*1000*60);
+//setInterval(fetch, 30*1000*60);
