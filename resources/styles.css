@@ -12,6 +12,10 @@
 
 .healthText {
   fill: fb-lavender;
+  font-size: 30;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 20;
 }
 
 .weatherText {

@@ -31,8 +31,9 @@ let settings = {
   displayAutoOff: true,
   temperatureUnit: "C", 
   weatherEnabled: true,
-  healthStatus: "Steps"
+  healthStatus: "Steps",
 };
+
 settings.temperatureUnit = units.temperature; // temperature unit came from FitBit App settings via user-settings.units
 
 messaging.peerSocket.onmessage = (evt) => {
@@ -44,8 +45,8 @@ messaging.peerSocket.onmessage = (evt) => {
     display.autoOff = true;
   }
   if(evt.data.key === "healthStatus") {
-    //if(healthStatusSettingValid(evt.data.value)){ settings.healthStatus = evt.data.value; };
-    settings.healthStatus = evt.data.value.values[0].name;
+    let s = settings.healthStatus = evt.data.value.values[0].name; // pull down configuration string
+    if(healthStatusSettingValid(s)){ settings.healthStatus = s; };
   }
   console.log("Health Status set to: " + settings.healthStatus);
 }
@@ -65,21 +66,11 @@ let weatherTemperature = document.getElementById("weatherTemperature");
 let healthStatusText = document.getElementById("healthStatusText");
 let healthStatusIcon = document.getElementById("healthStatusIcon");
 
-console.log("Icon: " + document.getElementById("healthStatusIcon"));
-
 const healthStatusSettingValid = (v) => {
   if(v==="Steps" || v==="Calories" || v==="Minutes" || v==="Distance" || v==="Elevation" || v==="HeartRate") {
     return true;
   }   
   return false;
-};
-
-healthStatusText.onclick = (e) => {
-  console("Event: Click " + JSON.stringify(e));
-};
-
-weatherConditions.onclick = (e) => {
-  console("Event: Click " + JSON.stringify(e));
 };
 
 // Returns an angle (0-360) for the current hour in the day, including minutes
@@ -101,13 +92,10 @@ const dateText = (d) => {
   return ["SUN","MON","TUE","WED","THU","FRI","SAT"][d.getDay()] + "  " + d.getDate();
 };
 
-const truncateText = (t, max) => {
-  //truncatedText = t.substring(0, Math.min(max,t.length));
-  if (t.length <= max) {
-    return t;
-  } else {    
-    return t.substring(0,(max-2)) + ".."
-  }
+let hrm = new HeartRateSensor();
+hrm.onreading = function() {
+//  console.log("Current heart rate: " + hrm.heartRate);
+  hrm.stop();
 }
 
 const healthStatus = (v) => {    
@@ -129,13 +117,13 @@ const healthStatus = (v) => {
       s = (today.local.elevationGain || "0");
       break;
     case "HeartRate":
-      const hrm = new HeartRateSensor();
+      hrm.start();
       s = (hrm.heartRate || "0");
       break;
     default:
       break;
   }
-  console.log("healthStatus: " + v + " => " + s);
+  //console.log("healthStatus: " + v + " => " + s);
   return s;
 };
 
@@ -148,7 +136,7 @@ const updateClock = () => {
   // Weather text update
   if(weather.is_success === true) {
     const WEATHER_COND_MAX_LENGTH = 12;
-    weatherConditions.text  = truncateText(weather.conditions, WEATHER_COND_MAX_LENGTH);
+    weatherConditions.text  = util.truncateText(weather.conditions, WEATHER_COND_MAX_LENGTH);
     weatherTemperature.text = settings.temperatureUnit === "C" ? 
       Math.round(weather.temperature) + "°C" :
       Math.round(weather.temperature * 9.0 / 5.0 + 32) + "°F";
@@ -166,7 +154,7 @@ const updateClock = () => {
   // Clock hands update
   hourHand.groupTransform.rotate.angle = hoursToAngle(hours, mins);  
   minHand.groupTransform.rotate.angle = minutesToAngle(mins);
-  secHand.groupTransform.rotate.angle = secondsToAngle(secs);  
+  secHand.groupTransform.rotate.angle = secondsToAngle(secs);
   
 }
 

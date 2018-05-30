@@ -71,8 +71,7 @@
   <section x="30%" y="70%">
     <image id="healthStatusIcon" href="images/stat_steps_open_32px.png" load="sync" class="healthText" 
            height="30" width="30" />
-    <text id="healthStatusText" font-size="30" font-family="Colfax-Medium" class="healthText" 
-      x="13%" y="8%" text-anchor="start" text-length="20">N/A</text> 
+    <text id="healthStatusText" class="healthText" x="13%" y="8%">N/A</text> 
   </section>
  
   <text id="dateStr" x="77%" y="53%" font-size="24" font-family="Tungsten-Medium" class="dateText"
